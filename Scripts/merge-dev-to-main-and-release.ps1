@@ -8,25 +8,25 @@ Write-Host "=== MERGE DEV → MAIN + RELEASE ===" -ForegroundColor Cyan
 
 # 1. Verifica repo Git
 if (-not (Test-Path ".git")) {
-    Write-Error "❌ Questa cartella NON è un repository Git."
+    Write-Error "Questa cartella NON è un repository Git."
     exit 1
 }
 
 # 2. Verifica working tree pulito
 $status = git status --porcelain
 if ($status) {
-    Write-Error "❌ Working tree NON pulito. Commit o stash prima di procedere."
+    Write-Error "Working tree NON pulito. Commit o stash prima di procedere."
     exit 1
 }
 
 # 3. Verifica esistenza branch
 $branches = git branch --list
 if ($branches -notmatch $DevBranch) {
-    Write-Error "❌ Branch DEV '$DevBranch' non trovato."
+    Write-Error "Branch DEV '$DevBranch' non trovato."
     exit 1
 }
 if ($branches -notmatch $MainBranch) {
-    Write-Error "❌ Branch MAIN '$MainBranch' non trovato."
+    Write-Error "Branch MAIN '$MainBranch' non trovato."
     exit 1
 }
 
@@ -36,7 +36,7 @@ git diff $MainBranch..$DevBranch
 
 $confirm = Read-Host "`nProcedere con il merge? (SI/NO)"
 if ($confirm -ne "SI") {
-    Write-Host "❌ Operazione annullata."
+    Write-Host "Operazione annullata."
     exit 0
 }
 
@@ -47,7 +47,7 @@ git pull
 # 6. Merge
 git merge $DevBranch
 if ($LASTEXITCODE -ne 0) {
-    Write-Error "❌ Merge fallito. Risolvi i conflitti manualmente."
+    Write-Error "Merge fallito. Risolvi i conflitti manualmente."
     exit 1
 }
 
@@ -61,7 +61,7 @@ if (-not $verExists) {
     git push -u origin $VerBranch
     git checkout $MainBranch
 } else {
-    Write-Host "ℹ️ Branch $VerBranch già esistente. Nessuna creazione."
+    Write-Host "Branch $VerBranch già esistente. Nessuna creazione."
 }
 
 # 9. Verifica finale hash
