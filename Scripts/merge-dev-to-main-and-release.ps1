@@ -4,7 +4,7 @@ param(
     [string]$VerBranch  = "PWA_Trascrizione_Ver02"
 )
 
-Write-Host "=== MERGE DEV → MAIN + RELEASE ===" -ForegroundColor Cyan
+Write-Host "=== MERGE DEV -> MAIN + RELEASE ===" -ForegroundColor Cyan
 
 # 1. Verifica repo Git
 if (-not (Test-Path ".git")) {
