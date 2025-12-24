@@ -1,0 +1,43 @@
+# =====================================
+#  .gitignore - PWA_Trascrizione_Infrastructure
+#  Evita di includere file locali, cache e credenziali
+# =====================================
+
+# --- PowerShell ---
+*.ps1~
+*.ps1.tmp
+*.ps1.bak
+
+# --- Bicep build output ---
+*.json
+!parameters.json   # eccezione: mantieni i parametri principali
+
+# --- Azure CLI e temp ---
+*.log
+*.bak
+*.tmp
+*.swp
+.vscode/
+
+# --- Local deployment artifacts ---
+.arm/
+.bicep/
+bin/
+obj/
+out/
+debug/
+temp/
+temp_*/
+bicep/temp.parameters.json
+# --- Environment & credentials ---
+.env
+.env.local
+*.key
+*.pem
+*.pfx
+*.log
+*.zip
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+*.code-workspace
