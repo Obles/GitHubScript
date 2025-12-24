@@ -7,6 +7,32 @@ param(
 Write-Host "=== MERGE DEV -> MAIN + RELEASE ===" -ForegroundColor Cyan
 
 # -------------------------------------------------------
+# CONTESTO DI ESECUZIONE (user-friendly)
+# -------------------------------------------------------
+
+$workspacePath = Get-Location
+$repoRoot      = git rev-parse --show-toplevel 2>$null
+$currentBranch = git branch --show-current
+$remoteOrigin  = git remote get-url origin 2>$null
+
+Write-Host ""
+Write-Host "=== CONTESTO DI ESECUZIONE ===" -ForegroundColor Cyan
+Write-Host "Workspace        : $($workspacePath.Path)"
+Write-Host "Repository Git   : $repoRoot"
+Write-Host "Branch corrente  : $currentBranch"
+Write-Host "Branch DEV       : $DevBranch"
+Write-Host "Branch MAIN      : $MainBranch"
+Write-Host "Branch VERSIONE  : $VerBranch"
+Write-Host "Remote origin    : $remoteOrigin"
+
+if ($workspacePath.Path -ne $repoRoot) {
+    Write-Host "NOTA: stai lavorando in una sottocartella del repository." -ForegroundColor Yellow
+}
+
+Write-Host "==============================" -ForegroundColor Cyan
+Write-Host ""
+
+# -------------------------------------------------------
 # 1. Verifica repository Git
 # -------------------------------------------------------
 if (-not (Test-Path ".git")) {
@@ -82,6 +108,8 @@ Write-Host ""
 Write-Host "--- DIFFERENZE DEV -> MAIN ---" -ForegroundColor Yellow
 git diff "$MainBranch..$DevBranch"
 
+Write-Host ""
+Write-Host "ATTENZIONE: verrà eseguito il MERGE su '$MainBranch' partendo da '$DevBranch' nel repository sopra indicato." -ForegroundColor Yellow
 $confirm = Read-Host "Procedere con il merge? (SI/NO)"
 if ($confirm -ne "SI") {
     Write-Host "Operazione annullata."
