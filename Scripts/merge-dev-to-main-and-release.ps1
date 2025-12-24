@@ -75,8 +75,12 @@ Write-Host "DEV  : $hDev"
 Write-Host "VER  : $hVer"
 
 if ($hMain -eq $hDev -and $hMain -eq $hVer) {
-    Write-Host "`n✅ SUCCESSO: tutti i branch sono allineati." -ForegroundColor Green
-} else {
-    Write-Error "`n❌ ERRORE: i branch NON sono allineati."
+    Write-Host ""
+    Write-Host "SUCCESSO: tutti i branch sono allineati." -ForegroundColor Green
+}
+else {
+    Write-Error ""
+    Write-Error "ERRORE: i branch NON sono allineati."
     exit 1
 }
+
